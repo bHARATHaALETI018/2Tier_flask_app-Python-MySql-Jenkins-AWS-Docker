@@ -16,11 +16,11 @@ pipeline {
                 echo 'Image Built Successfully'
             }
         }
-        // stage('Pushing Image') {
-        //     steps {
-        //         echo 'Pushing Image to Docker Hub'
-        //     }
-        // }
+        stage('Pushing Image') {
+            steps {
+                echo 'Pushing Image to Docker Hub'
+            }
+        }
         stage('Deploy') {
             steps {
                 echo 'Deploying Application'
