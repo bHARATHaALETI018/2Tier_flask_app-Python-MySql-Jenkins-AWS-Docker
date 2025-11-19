@@ -8,16 +8,16 @@
 [![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red.svg)](https://jenkins.io/)
 
 ### Table of Contents
-- [📖 About This Project](#📖-about-this-project)
-- [🏗️ Architecture & CI/CD Pipeline](#🏗️-architecture--cicd-pipeline)
-- [🚀 Quick Start](#🚀-quick-start)
-- [🎨 Customization](#🎨-customization)
-- [🤝 Contributing](#🤝-contributing)
-- [📝 License](#📝-license)
-- [🙏 Acknowledgments](#🙏-acknowledgments)
+- [📖 About This Project](#about-this-project)
+- [🏗️ Architecture & CI/CD Pipeline](#architecture--cicd-pipeline)
+- [🚀 Quick Start](#quick-start)
+- [🎨 Customization](#customization)
+- [🤝 Contributing](#contributing)
+- [📝 License](#license)
+- [🙏 Acknowledgments](#acknowledgments)
 
 
-## 📖 About This Project
+## About This Project
 
 Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating modern DevOps practices through a beautiful, responsive 2-tier web application. The app features a sleek glassmorphism design with animated backgrounds and serves as both a personal portfolio and a messaging platform.
 
@@ -25,7 +25,7 @@ Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating mode
 
 > 🎨 Modern UI/UX -- 📱 Fully Responsive -- 🐳 Containerized -- ☁️ Cloud-Native -- 🔄 CI/CD Pipeline -- 💾 Persistent Data
 
-## 🏗️ Architecture & CI/CD Pipeline
+## Architecture & CI/CD Pipeline
 
 ```
 +-----------------+      +----------------------+      +-----------------------------+
@@ -56,7 +56,7 @@ Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating mode
 
 *Architecture diagram generated with AI assistance*
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1️⃣ Server Setup 
 1. Launch a EC2 Instance
@@ -166,7 +166,7 @@ Confirm the containers are running on the EC2 instance with `docker ps`.
 ![demo](./images/demo-video.gif)
 
 
-## 🎨 Customization
+## Customization
 
 ### Personalizing the Application
 
@@ -190,7 +190,7 @@ Confirm the containers are running on the EC2 instance with `docker ps`.
    /* Modify colors, fonts, animations */
    ```
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Here's how you can help:
 
@@ -207,11 +207,11 @@ Contributions are welcome! Here's how you can help:
 - Test your changes locally
 - Update documentation as needed
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Flask Community** for the amazing web framework
 - **Docker** for containerization technology
