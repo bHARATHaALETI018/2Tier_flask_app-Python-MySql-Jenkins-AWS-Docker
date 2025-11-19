@@ -7,6 +7,16 @@
 [![AWS](https://img.shields.io/badge/AWS-EC2-orange.svg)](https://aws.amazon.com/ec2/)
 [![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red.svg)](https://jenkins.io/)
 
+### Table of Contents
+- [📖 About This Project](#📖-about-this-project)
+- [🏗️ Architecture & CI/CD Pipeline](#🏗️-architecture--cicd-pipeline)
+- [🚀 Quick Start](#🚀-quick-start)
+- [🎨 Customization](#🎨-customization)
+- [🤝 Contributing](#🤝-contributing)
+- [📝 License](#📝-license)
+- [🙏 Acknowledgments](#🙏-acknowledgments)
+
+
 ## 📖 About This Project
 
 Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating modern DevOps practices through a beautiful, responsive 2-tier web application. The app features a sleek glassmorphism design with animated backgrounds and serves as both a personal portfolio and a messaging platform.
@@ -50,8 +60,10 @@ Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating mode
 
 ### 1️⃣ Server Setup 
 1. Launch a EC2 Instance
+   - ![server-creation](./images/server-creation.png)
 2. Configure Security Group 
    - Allow ports 5000 (App), 8080 (Jenkins) in Inbound-Rules.
+   - ![editing-security-group](./images/editing-security-group.png)
 3. Connect to EC2 Instance 
 `ssh -i /path/to/key.pem ubuntu@<ec2-public-ip>`
 
@@ -110,6 +122,7 @@ Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating mode
    ```
 5. Install Suggested Plugins and Create Admin User.
 6. Install **Pipeline: Stage View** plugin.
+   - ![stage-view-plugin](./images/stage-view.png)
 
 ### 4️⃣ Jenkins Pipeline.
 
@@ -120,12 +133,15 @@ Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating mode
 2. Configure the Pipeline:
    - In the configuration, provide description, 
    - Triggers select - GitHub hook trigger for GITScm polling
+   - Setup a webhook on github
+      - ![webhook](./images/webhook.png)
    - Pipeline: Pipeline script from SCM.
    - Choose Git as the SCM.
    - Enter your GitHub repository URL, add Credentials
    - In Branches to build, select your 
    - Verify the Script Path is Jenkinsfile.
    - Save the configuration.
+   - ![config](./images/config.png)
 
 3. Testing:
    - Initally click on **Build Now** from the left panel
@@ -138,10 +154,16 @@ Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating mode
       sudo systemctl restart docker
       ```
    - Now try again.
+![jenkins](./images/jenkins.png)
+
 
 Open your browser and navigate to -> `http://your-ec2-ip:5000`
 
 Confirm the containers are running on the EC2 instance with `docker ps`.
+
+### Demo
+
+![demo](./images/demo-video.gif)
 
 
 ## 🎨 Customization
@@ -167,24 +189,6 @@ Confirm the containers are running on the EC2 instance with `docker ps`.
    /* In templates/index.html */
    /* Modify colors, fonts, animations */
    ```
-
-## 🔍 Monitoring & Troubleshooting
-
-### Health Checks
-
-```bash
-# Check container status
-docker-compose ps
-
-# View application logs
-docker-compose logs web
-
-# View database logs
-docker-compose logs db
-
-# Check resource usage
-docker stats
-```
 
 ## 🤝 Contributing
 
