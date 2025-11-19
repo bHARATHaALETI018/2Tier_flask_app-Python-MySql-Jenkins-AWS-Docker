@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building Image'
-                sh 'docker build -t flask-mysql-app:v1.1 .'
+                sh 'docker build -t flask-app:latest .'
                 echo 'Image Built Successfully'
             }
         }
@@ -24,7 +24,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying Application'
-                sh 'docker compose up'
+                sh 'docker compose down || true'
+                sh 'docker compose up -d --build'
                 echo 'Application Deployed Successfully'
             }
         }

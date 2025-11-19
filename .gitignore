@@ -1,2 +1,4 @@
 flask2tierapp/
 __pycache__/
+.DS_Store
+images/demo-video.mov

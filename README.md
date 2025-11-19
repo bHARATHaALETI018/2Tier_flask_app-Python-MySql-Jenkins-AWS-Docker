@@ -7,236 +7,164 @@
 [![AWS](https://img.shields.io/badge/AWS-EC2-orange.svg)](https://aws.amazon.com/ec2/)
 [![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red.svg)](https://jenkins.io/)
 
+### Table of Contents
+- [📖 About This Project](#📖-about-this-project)
+- [🏗️ Architecture & CI/CD Pipeline](#🏗️-architecture--cicd-pipeline)
+- [🚀 Quick Start](#🚀-quick-start)
+- [🎨 Customization](#🎨-customization)
+- [🤝 Contributing](#🤝-contributing)
+- [📝 License](#📝-license)
+- [🙏 Acknowledgments](#🙏-acknowledgments)
+
+
 ## 📖 About This Project
 
 Welcome to **Bharath's DevSpace**! This is a showcase project demonstrating modern DevOps practices through a beautiful, responsive 2-tier web application. The app features a sleek glassmorphism design with animated backgrounds and serves as both a personal portfolio and a messaging platform.
 
 ### ✨ What Makes This Special?
 
-- **🎨 Modern UI/UX**: Beautiful glassmorphism design with animated gradient backgrounds
-- **📱 Fully Responsive**: Works perfectly on desktop, tablet, and mobile devices
-- **🐳 Containerized**: Complete Docker setup with multi-container orchestration
-- **☁️ Cloud-Native**: Deployed on AWS EC2 with production-ready configuration
-- **🔄 CI/CD Pipeline**: Automated deployment using Jenkins for seamless updates
-- **💾 Persistent Data**: MySQL database with proper volume management
+> 🎨 Modern UI/UX -- 📱 Fully Responsive -- 🐳 Containerized -- ☁️ Cloud-Native -- 🔄 CI/CD Pipeline -- 💾 Persistent Data
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture & CI/CD Pipeline
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend       │    │   Database      │
-│   (HTML/CSS/JS) │◄──►│   (Flask App)   │◄──►│   (MySQL)       │
-│                 │    │   Port: 5000    │    │   Port: 3306    │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-         │                       │                       │
-         └───────────────────────┼───────────────────────┘
-                                 │
-                    ┌─────────────────┐
-                    │   Docker        │
-                    │   Network       │
-                    └─────────────────┘
++-----------------+      +----------------------+      +-----------------------------+
+|   Developer     |----->|     GitHub Repo      |----->|        Jenkins Server       |
+| (pushes code)   |      | (Source Code Mgmt)   |      |         (on AWS EC2)        |
++-----------------+      +----------------------+      |                             |
+                                                       | 1. Clones Repo              |
+                                                       | 2. Builds Docker Image      |
+                                                       | 3. Runs Docker Compose      |
+                                                       +--------------+--------------+
+                                                                      |
+                                                                      | Deploys
+                                                                      v
+                                                       +-----------------------------+
+                                                       |      Application Server     |
+                                                       |        (Same AWS EC2)       |
+                                                       |                             |
+                                                       | +-------------------------+ |
+                                                       | | Docker Container: Flask | |
+                                                       | +-------------------------+ |
+                                                       |              |              |
+                                                       |              v              |
+                                                       | +-------------------------+ |
+                                                       | | Docker Container: MySQL | |
+                                                       | +-------------------------+ |
+                                                       +-----------------------------+
 ```
 
-## 🚀 Features
-
-### 🎯 Core Functionality
-- **Interactive Messaging**: Real-time message posting and display
-- **Profile Showcase**: Personal information and tech stack display
-- **Responsive Design**: Optimized for all screen sizes
-- **Data Persistence**: Messages stored in MySQL database
-
-### 🛠️ Technical Features
-- **Flask Backend**: RESTful API with JSON responses
-- **MySQL Integration**: Robust database connectivity with connection pooling
-- **Docker Compose**: Multi-container setup with networking
-- **Environment Variables**: Secure configuration management
-- **Health Checks**: Container health monitoring
-- **Volume Persistence**: Data survives container restarts
-
-### 🔧 DevOps Features
-- **Jenkins Pipeline**: Automated build, test, and deployment
-- **AWS EC2 Deployment**: Production-ready cloud hosting
-- **Docker Registry**: Container image management
-- **Infrastructure as Code**: Reproducible deployments
-- **Monitoring Ready**: Structured for observability tools
-
-## 📋 Prerequisites
-
-Before diving in, make sure you have:
-
-### 🖥️ Local Development
-- **Python 3.8+** - [Download here](https://python.org/downloads/)
-- **Docker & Docker Compose** - [Get Docker](https://docs.docker.com/get-docker/)
-- **Git** - [Install Git](https://git-scm.com/downloads)
-
-### ☁️ Production Deployment
-- **AWS Account** with EC2 access
-- **Jenkins Server** (can be on same EC2 or separate)
-- **Domain/IP** for your application
-- **Basic knowledge** of Docker, AWS, and Jenkins
+*Architecture diagram generated with AI assistance*
 
 ## 🚀 Quick Start
 
-### 1️⃣ Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/bharath-devspace.git
-cd bharath-devspace
-```
+### 1️⃣ Server Setup 
+1. Launch a EC2 Instance
+   - ![server-creation](./images/server-creation.png)
+2. Configure Security Group 
+   - Allow ports 5000 (App), 8080 (Jenkins) in Inbound-Rules.
+   - ![editing-security-group](./images/editing-security-group.png)
+3. Connect to EC2 Instance 
+`ssh -i /path/to/key.pem ubuntu@<ec2-public-ip>`
 
 ### 2️⃣ Environment Setup
 
-Create your environment file:
-```bash
-cp .env.example .env
-# Edit .env with your database credentials
-```
+1. Install Dependencies on EC2
+- Update System Packages:
+   `sudo apt update && sudo apt upgrade -y`
 
-### 3️⃣ Local Development
+2. Install Git, Docker, and Docker Compose:
+   `sudo apt install git docker.io docker-compose-v2 -y`
 
-**Option A: Using Docker (Recommended)**
-```bash
-# Start the entire application stack
-docker-compose up -d
+3. Start and Enable Docker:
 
-# View logs
-docker-compose logs -f
-
-# Stop the application
-docker-compose down
-```
-
-**Option B: Manual Setup**
-```bash
-# Install dependencies
-pip install -r requirement.txt
-
-# Set environment variables
-export MYSQL_HOST=localhost
-export MYSQL_USER=your_user
-export MYSQL_PASSWORD=your_password
-export MYSQL_DB=your_database
-
-# Run the application
-python app.py
-```
-
-### 4️⃣ Access Your Application
-
-Open your browser and navigate to:
-- **Local**: `http://localhost:5000`
-- **Production**: `http://your-ec2-ip:5000`
-
-## 🐳 Docker Configuration
-
-### Container Architecture
-
-| Service | Image | Port | Purpose |
-|---------|-------|------|----------|
-| **web** | Custom Flask | 5000 | Web application |
-| **db** | MySQL 8.0 | 3306 | Database server |
-
-### Key Docker Features
-- **Multi-stage builds** for optimized images
-- **Health checks** for container monitoring
-- **Named volumes** for data persistence
-- **Custom networks** for service communication
-- **Environment-based configuration**
-
-## 🔧 Configuration
-
-### Environment Variables
-
-| Variable | Description | Default | Required |
-|----------|-------------|---------|----------|
-| `MYSQL_HOST` | Database hostname | localhost | ✅ |
-| `MYSQL_USER` | Database username | root | ✅ |
-| `MYSQL_PASSWORD` | Database password | - | ✅ |
-| `MYSQL_DB` | Database name | devspace | ✅ |
-| `FLASK_ENV` | Flask environment | production | ❌ |
-| `FLASK_DEBUG` | Debug mode | False | ❌ |
-
-### Database Schema
-
-```sql
-CREATE TABLE messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-## 🚀 Deployment Guide
-
-### AWS EC2 Deployment
-
-1. **Launch EC2 Instance**
    ```bash
-   # Amazon Linux 2 or Ubuntu 20.04 LTS recommended
-   # t2.micro is sufficient for testing
-   # t3.small recommended for production
-   ```
-
-2. **Install Dependencies**
-   ```bash
-   # Update system
-   sudo yum update -y  # Amazon Linux
-   # sudo apt update && sudo apt upgrade -y  # Ubuntu
-   
-   # Install Docker
-   sudo yum install -y docker
-   sudo systemctl start docker
    sudo systemctl enable docker
-   sudo usermod -a -G docker ec2-user
-   
-   # Install Docker Compose
-   sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-   sudo chmod +x /usr/local/bin/docker-compose
+   sudo systemctl start docker
    ```
-
-3. **Deploy Application**
+4. Add User to Docker Group (to run docker without sudo):
    ```bash
-   # Clone repository
-   git clone <your-repo-url>
-   cd bharath-devspace
-   
-   # Configure environment
-   cp .env.example .env
-   nano .env  # Edit with your settings
-   
-   # Start application
-   docker-compose up -d
+   sudo usermod -aG docker $USER
+   newgrp docker
    ```
 
-4. **Configure Security Groups**
-   - Allow inbound traffic on port 5000
-   - Allow SSH access (port 22) from your IP
-   - Consider using Application Load Balancer for production
+### 3️⃣ Jenkins Installation and Setup 
 
-### Jenkins CI/CD Pipeline
+*[Installation docs - Official jenkins link](https://www.jenkins.io/doc/book/installing/linux/#debianubuntu)* 
 
-The included `Jenkinsfile` provides:
-- **Automated builds** on code changes
-- **Docker image creation** and registry push
-- **Deployment to EC2** instances
-- **Health checks** and rollback capabilities
+1. Update the Debian apt repositories, install OpenJDK 21, and check the installation with the commands:
+   ```bash
+   sudo apt update
+   sudo apt install fontconfig openjdk-21-jre
+   java -version
+   ```
+2. Adding Jenkins Repository and Install:
+   ```bash
+   sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
+   https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+   echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
+   https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+   /etc/apt/sources.list.d/jenkins.list > /dev/null
+   sudo apt update
+   sudo apt install jenkins
+   ```
+3. Enable and Start Jenkins:
+   ```bash
+   sudo systemctl enable jenkins
+   sudo systemctl start jenkins
+   sudo systemctl status jenkins
+   ```
+4. Access Jenkins:
+   - Open your browser and navigate to `http://<ec2-public-ip>:8080`
+   - Follow the on-screen instructions to unlock Jenkins using the initial admin password:
+   ```bash
+   sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+   ```
+5. Install Suggested Plugins and Create Admin User.
+6. Install **Pipeline: Stage View** plugin.
+   - ![stage-view-plugin](./images/stage-view.png)
 
-## 📁 Project Structure
+### 4️⃣ Jenkins Pipeline.
 
-```
-bharath-devspace/
-├── 📄 app.py                 # Flask application
-├── 📄 Dockerfile            # Container definition
-├── 📄 docker-compose.yml    # Multi-container setup
-├── 📄 Jenkinsfile           # CI/CD pipeline
-├── 📄 requirement.txt       # Python dependencies
-├── 📄 message.sql           # Database schema
-├── 📁 templates/            # Frontend files
-│   ├── 📄 index.html        # Main HTML template
-│   └── 📄 style.css         # Stylesheet
-├── 📁 diagrams/             # Architecture diagrams
-└── 📄 README.md             # This file
-```
+1. Create a New Pipeline Job in Jenkins:
+   - From the Jenkins dashboard, select New Item.
+   - Name the project, choose Pipeline, and click OK.
+
+2. Configure the Pipeline:
+   - In the configuration, provide description, 
+   - Triggers select - GitHub hook trigger for GITScm polling
+   - Setup a webhook on github
+      - ![webhook](./images/webhook.png)
+   - Pipeline: Pipeline script from SCM.
+   - Choose Git as the SCM.
+   - Enter your GitHub repository URL, add Credentials
+   - In Branches to build, select your 
+   - Verify the Script Path is Jenkinsfile.
+   - Save the configuration.
+   - ![config](./images/config.png)
+
+3. Testing:
+   - Initally click on **Build Now** from the left panel
+   - You may encounter *Your pipeline failed because Jenkins does NOT have permission to access Docker*
+      - This is the most common Jenkins + Docker error.
+      - Run these commands on your Jenkins server:
+      ```bash
+      sudo usermod -aG docker jenkins
+      sudo systemctl restart jenkins
+      sudo systemctl restart docker
+      ```
+   - Now try again.
+![jenkins](./images/jenkins.png)
+
+
+Open your browser and navigate to -> `http://your-ec2-ip:5000`
+
+Confirm the containers are running on the EC2 instance with `docker ps`.
+
+### Demo
+
+![demo](./images/demo-video.gif)
+
 
 ## 🎨 Customization
 
@@ -258,36 +186,9 @@ bharath-devspace/
 
 3. **Customize Styling**
    ```css
-   /* In templates/style.css */
+   /* In templates/index.html */
    /* Modify colors, fonts, animations */
    ```
-
-## 🔍 Monitoring & Troubleshooting
-
-### Health Checks
-
-```bash
-# Check container status
-docker-compose ps
-
-# View application logs
-docker-compose logs web
-
-# View database logs
-docker-compose logs db
-
-# Check resource usage
-docker stats
-```
-
-### Common Issues
-
-| Issue | Solution |
-|-------|----------|
-| **Database connection failed** | Check MySQL credentials in `.env` |
-| **Port already in use** | Change port in `docker-compose.yml` |
-| **Container won't start** | Check logs with `docker-compose logs` |
-| **CSS not loading** | Verify file paths and Flask static config |
 
 ## 🤝 Contributing
 
@@ -321,10 +222,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact & Support
 
 **Bharath Aaleti**
-- 💼 DevOps Engineer at Accenture
-- 🌐 LinkedIn: [Connect with me](https://linkedin.com/in/bharath-aaleti)
-- 📧 Email: bharath.aaleti@example.com
-- 🐙 GitHub: [@bharath-aaleti](https://github.com/bharath-aaleti)
+- 💼 DevOps Engineer
+- 🌐 LinkedIn: [Connect with me](https://linkedin.com/in/bharathaaleti)
+- 📧 Email: aaletibharath@gmail.com
+- 🐙 GitHub: [@bHARATHaALETI018](https://github.com/bHARATHaALETI018/)
 
 ---
 
