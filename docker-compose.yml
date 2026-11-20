@@ -26,8 +26,8 @@ services:
     restart: always
     environment:
       - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
+      - MYSQL_USER=Corvit@786
+      - MYSQL_PASSWORD=Corvit@786
       - MYSQL_DB=devops
     networks:
       - two_tier_network
